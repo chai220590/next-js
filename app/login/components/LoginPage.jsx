@@ -2,10 +2,18 @@
 import { useAppDispatch } from "@/services/hooks/hook";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 function LoginPage() {
   const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  const accessToken = localStorage.getItem("ACCESS_TOKEN");
+  if (!!accessToken) {
+    router.replace("/admin");
+    return <div>{children}</div>;
+  }
   const {
     register,
     handleSubmit,
@@ -15,6 +23,8 @@ function LoginPage() {
   const onSubmit = (data) => {
     console.log(data);
     // Xử lý logic đăng nhập ở đây
+    localStorage.setItem("ACCESS_TOKEN","1");
+    router.replace("/admin")
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex justify-center">
