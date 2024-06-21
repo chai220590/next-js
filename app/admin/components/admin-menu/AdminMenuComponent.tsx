@@ -14,8 +14,8 @@ function AdminMenuComponent() {
       icon: "ok",
     },
     {
-      label: "aasdas d asdasaa",
-      path: "aaa",
+      label: "Đăng xuất",
+      path: "/admin?confirm-logout=true",
       icon: "ok",
     },
   ];

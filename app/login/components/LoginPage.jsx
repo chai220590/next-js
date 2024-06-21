@@ -1,30 +1,46 @@
 "use client";
+import SysFetch from "@/services/fetch";
 import { useAppDispatch } from "@/services/hooks/hook";
+import { validateLogin } from "@/utils/validation";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 function LoginPage() {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const accessToken = localStorage.getItem("ACCESS_TOKEN");
-  if (!!accessToken) {
-    router.replace("/admin");
-    return <div>{children}</div>;
-  }
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      const accessToken = localStorage.getItem("ACCESS_TOKEN");
+      if (!!accessToken) {
+        router.replace("/admin");
+      }
+    }
+  }, []);
+
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
     clearErrors,
   } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
-    // Xử lý logic đăng nhập ở đây
-    localStorage.setItem("ACCESS_TOKEN","1");
-    router.replace("/admin")
+  const onSubmit = async (data) => {
+    try {
+      const rs = await SysFetch.post("login", data);
+      console.log({ rs });
+      toast.success({
+        title: "title",
+      });
+      // localStorage.setItem("ACCESS_TOKEN", "1");
+      // router.replace("/admin");
+    } catch (error) {
+      console.log(error);
+      toast.success("title");
+    }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex justify-center">

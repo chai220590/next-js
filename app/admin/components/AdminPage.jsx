@@ -1,8 +1,10 @@
 import React from "react";
-import AdminMenuComponent from './admin-menu/AdminMenuComponent'
+import AdminMenuComponent from "./admin-menu/AdminMenuComponent";
+import ConfirmLogoutModal from "./ConfirmLogoutModal";
 function AdminPage() {
   return (
     <div className="grid grid-cols-4">
+      <ConfirmLogoutModal />
       <div className="col-1">
         <AdminMenuComponent />
       </div>

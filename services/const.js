@@ -16,7 +16,7 @@ const CONST = {
     ],
   },
   URL: {
-    API: "",
+    API: "http://167.86.80.140:4062/api",
   },
   STORAGE: {
     ACCESS_TOKEN: "ACCESS_TOKEN",

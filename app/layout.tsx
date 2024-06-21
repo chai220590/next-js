@@ -2,7 +2,8 @@ import "@/styles/globals.css";
 import { Link } from "@nextui-org/link";
 import clsx from "clsx";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Import CSS for the carousel
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Metadata, Viewport } from "next";
 
 import { Providers } from "./providers";
@@ -45,6 +46,21 @@ export default function RootLayout({
         )}
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
+          <ToastContainer
+            toastStyle={{
+              paddingBlock: 20,
+            }}
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
           <ProcessBar />
           <div className="relative flex flex-col h-screen">
             <Navbar />

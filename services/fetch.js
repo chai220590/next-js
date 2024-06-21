@@ -1,21 +1,5 @@
 import axios from "axios";
-import CONST from "./services/const.js";
-
-let isRefreshing = false;
-let failedQueue = [];
-
-const processQueue = (error, token = null) => {
-  failedQueue.forEach((prom) => {
-    if (error) {
-      prom.reject(error);
-    } else {
-      prom.resolve(token);
-    }
-  });
-
-  failedQueue = [];
-};
-
+import CONST from "./const";
 const timeout = CONST.REQUEST.TIME_OUT;
 let AxiosClient = axios.create({
   baseURL: CONST.URL.API,
@@ -43,68 +27,6 @@ const registerInterceptorResponse = (clientInstance) => {
       return response.data || response;
     },
     async (error) => {
-      const originalRequest = error.config;
-      if (error.response.status === 401 && !originalRequest._retry) {
-        if (isRefreshing) {
-          return new Promise(function (resolve, reject) {
-            failedQueue.push({ resolve, reject });
-          })
-            .then((token) => {
-              originalRequest.headers["Authorization"] = "Bearer " + token;
-              return clientInstance(originalRequest);
-            })
-            .catch((err) => {
-              return Promise.reject(err);
-            });
-        }
-
-        originalRequest._retry = true;
-        isRefreshing = true;
-
-        return new Promise(async function (resolve, reject) {
-          const currentRefreshToken = localStorage.getItem(
-            CONST.STORAGE.REFRESH_TOKEN
-          );
-
-          try {
-            const refreshResult = await clientInstance({
-              method: "POST",
-              data: {
-                refreshToken: currentRefreshToken,
-              },
-              url: "admin-auth/refresh-token",
-            });
-            if (refreshResult.success) {
-              axios.defaults.headers.common["Authorization"] =
-                "Bearer " + refreshResult.data.accessToken;
-              originalRequest.headers["Authorization"] =
-                "Bearer " + refreshResult.data.accessToken;
-
-              localStorage.setItem(
-                CONST.STORAGE.REFRESH_TOKEN,
-                refreshResult.data.refreshToken
-              );
-              localStorage.setItem(
-                CONST.STORAGE.ACCESS_TOKEN,
-                refreshResult.data.accessToken
-              );
-
-              processQueue(null, refreshResult.data.accessToken);
-              isRefreshing = false;
-              resolve(clientInstance(originalRequest));
-            } else {
-              alert("Lỗi xác thực");
-              localStorage.clear();
-              window.location.href = "/";
-            }
-          } catch (error) {
-            alert("Lỗi xác thực");
-            localStorage.clear();
-            window.location.href = "/";
-          }
-        });
-      }
-
       return Promise.reject(error);
     }
   );
