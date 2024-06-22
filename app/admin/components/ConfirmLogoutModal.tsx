@@ -28,7 +28,9 @@ function ConfirmLogoutModal() {
   const onLogout = () => {
     if (typeof window !== undefined) {
       localStorage.clear();
-      router.replace("/login");
+      setTimeout(() => {
+        router.replace("/");
+      }, 100);
     }
   };
 

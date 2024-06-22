@@ -29,7 +29,10 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/components/banner/BannerRightComponent.jsx",
-    "app/components/WithIntersectionObserver.js"
-, "app/components/banner/SharpComponent.jsx", "app/admin/components/AdminAuth.tsx", "services/fetch.js"  ],
+    "app/components/WithIntersectionObserver.js",
+    "app/components/banner/SharpComponent.jsx",
+    "app/admin/components/AdminAuth.tsx",
+    "services/fetch.ts"
+  ],
   "exclude": ["node_modules"]
 }

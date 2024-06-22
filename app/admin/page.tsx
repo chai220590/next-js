@@ -1,11 +1,7 @@
 import AdminAuth from "./components/AdminAuth";
 import AdminPage from "./components/AdminPage";
 function Admin() {
-  return (
-    <AdminAuth>
-      <AdminPage />
-    </AdminAuth>
-  );
+  return <AdminPage />;
 }
 
 export default Admin;

@@ -1,5 +1,6 @@
-import axios from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import CONST from "./const";
+import { toast } from "react-toastify";
 const timeout = CONST.REQUEST.TIME_OUT;
 let AxiosClient = axios.create({
   baseURL: CONST.URL.API,
@@ -9,31 +10,37 @@ let AxiosClient = axios.create({
   },
 });
 
-const registerInterceptorsRequest = (clientInstance) => {
+const registerInterceptorsRequest = (clientInstance: AxiosInstance) => {
   clientInstance.interceptors.request.use(
-    async (config) => {
+    async (config: any) => {
       return config;
     },
-    (error) => {
+    (error: any) => {
       return Promise.reject(error);
     }
   );
 };
 registerInterceptorsRequest(AxiosClient);
 
-const registerInterceptorResponse = (clientInstance) => {
+const registerInterceptorResponse = (clientInstance: AxiosInstance) => {
   clientInstance.interceptors.response.use(
-    async (response) => {
+    async (response: { data: any }) => {
       return response.data || response;
     },
-    async (error) => {
+    async (error: any) => {
+      if (error?.response?.data) {
+        toast.error(error?.response?.data);
+      }
       return Promise.reject(error);
     }
   );
 };
 registerInterceptorResponse(AxiosClient);
 
-const setConfigAxiosClient = (accessToken, clientAxiosInstance) => {
+const setConfigAxiosClient = (
+  accessToken: any,
+  clientAxiosInstance: AxiosInstance
+) => {
   clientAxiosInstance.defaults.headers.common = {
     "Content-Type": "application/json",
     Authorization: "",
@@ -44,31 +51,31 @@ const setConfigAxiosClient = (accessToken, clientAxiosInstance) => {
   }
 };
 
-export function setConfigAxios(accessToken) {
+export function setConfigAxios(accessToken: any) {
   setConfigAxiosClient(accessToken, AxiosClient);
 }
 
-const post = (url, data, config = {}) => {
+const post = (url: string, data: any, config = {}) => {
   return AxiosClient.post(url, data, config);
 };
 
-const get = (url, data, config = {}) => {
-  return AxiosClient.get(url, data, config);
+const get = (url: string, data: AxiosRequestConfig<any> | undefined) => {
+  return AxiosClient.get(url, data);
 };
 
-const put = (url, data, config = {}) => {
+const put = (url: string, data: any, config = {}) => {
   return AxiosClient.put(url, data, config);
 };
 
-const patch = (url, data, config = {}) => {
+const patch = (url: string, data: any, config = {}) => {
   return AxiosClient.patch(url, data, config);
 };
 
-const del = (url, config = {}) => {
+const del = (url: string, config = {}) => {
   return AxiosClient.delete(url, config);
 };
 
-const postWithCustomHeader = (url, data, customHeaders) => {
+const postWithCustomHeader = (url: string, data: any, customHeaders: any) => {
   const config = {
     headers: {
       ...AxiosClient.defaults.headers.common,
