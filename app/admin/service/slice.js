@@ -12,6 +12,7 @@ const AdminSlice = createSlice({
     setSystemSetting: (state, { payload }) => {
       state.systemSetting = payload || [];
     },
+    saveSystemSetting: (state, { payload }) => {},
   },
 });
 

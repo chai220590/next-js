@@ -1,0 +1,27 @@
+/* App.css */
+
+.item {
+  padding: 16px;
+  margin: 8px 0;
+  background-color: white;
+  border: 2px solid blue;
+  border-radius: 4px;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+
+.dragging {
+  border-color: red !important;
+  opacity: 0.5;
+}
+
+.droppable {
+  padding: 8px;
+  background-color: white;
+  display: flex;
+}
+
+.not-allowed {
+  background-color: grey;
+  cursor: not-allowed;
+}

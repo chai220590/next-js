@@ -11,7 +11,7 @@ function ProcessBar() {
       <div className={styles.progressBar}></div>
     </div>
   ) : (
-    <div className="h-[4px]" />
+    <div className="h-[2px]" />
   );
 }
 

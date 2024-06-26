@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Kbd } from "@nextui-org/kbd";
@@ -23,8 +24,12 @@ import {
 } from "@/components/icons";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { siteConfig } from "@/config/site";
+import { useAppSelector } from "@/services/hooks/hook";
+import { AppSelectors } from "@/services/app/app.slice";
 
 export const Navbar = () => {
+  const systemSetting = useAppSelector(AppSelectors.systemSetting);
+
   const searchInput = (
     <Input
       aria-label="Search"
@@ -47,7 +52,7 @@ export const Navbar = () => {
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             <Logo />
-            <p className="font-bold text-inherit">LOGO</p>
+            <p className="font-bold text-inherit">{systemSetting?.appName}</p>
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
@@ -105,8 +110,8 @@ export const Navbar = () => {
                   index === 2
                     ? "primary"
                     : index === siteConfig.navMenuItems.length - 1
-                    ? "danger"
-                    : "foreground"
+                      ? "danger"
+                      : "foreground"
                 }
                 href="#"
                 size="lg"

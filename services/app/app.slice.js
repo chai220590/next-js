@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isLoading: false,
+  systemSetting: undefined,
 };
 
 const AppSlice = createSlice({
@@ -10,6 +11,10 @@ const AppSlice = createSlice({
   reducers: {
     setIsLoading: (state, { payload }) => {
       state.isLoading = payload;
+    },
+    getSystemSetting: () => {},
+    setSystemSetting: (state, { payload }) => {
+      state.systemSetting = payload;
     },
   },
 });
@@ -22,4 +27,5 @@ export const AppActions = AppSlice.actions;
 
 export const AppSelectors = {
   isLoading: (state) => state.app.isLoading,
+  systemSetting: (state) => state.app.systemSetting,
 };

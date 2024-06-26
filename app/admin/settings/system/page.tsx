@@ -1,36 +1,12 @@
 "use client";
 import { AdminActions, AdminSelectors } from "@/app/admin/service/slice";
-import { AppSelectors } from "@/services/app/app.slice";
-import { CloudArrowUpIcon } from "@heroicons/react/24/solid";
-import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import _ from "lodash";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 function AdminSettingSystem() {
   const dispatch = useDispatch();
-  const isLoading = useSelector(AppSelectors.isLoading);
   const systemSetting = useSelector(AdminSelectors.systemSetting);
-  const [appName, setAppName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-
-  useEffect(() => {
-    initData();
-  }, [systemSetting]);
-
-  const initData = () => {
-    if (!_.isEmpty(systemSetting)) {
-      handleSetData("appName", setAppName);
-      handleSetData("phoneNumber", setPhoneNumber);
-    }
-  };
-
-  const handleSetData = (code: any, setCode: (arg0: any) => void) => {
-    const temp = _.find(systemSetting, { code });
-    if (temp) {
-      setCode(temp?.value);
-    }
-  };
 
   useEffect(() => {
     getSettingSystem();
@@ -39,34 +15,65 @@ function AdminSettingSystem() {
   const getSettingSystem = () => {
     dispatch(AdminActions.getSystemSetting({ key: "setting-system" }));
   };
-  return (
-    <div>
-      <div className="flex justify-between items-center my-4">
-        <div className="text-2xl font-bold mb-4">Cài đặt hệ thống</div>
-        <div>
-          <Button isIconOnly color="primary">
-            <CloudArrowUpIcon className="size-6" />
-          </Button>
+
+  const updateValueByCode = useCallback(
+    (code: any, value: any) => {
+      const newData = _.cloneDeep(systemSetting);
+
+      const obj = _.find(newData, { code });
+      if (obj) {
+        obj.value = value;
+      }
+
+      return newData;
+    },
+    [systemSetting]
+  );
+
+  const inputPropsHandle = useCallback(
+    (code: any) => {
+      return {
+        value: _.find(systemSetting, { code })?.value,
+        onChange: (e: { target: { value: any } }) => {
+          const currentItem = _.find(systemSetting, { code });
+          dispatch(
+            AdminActions.saveSystemSetting({
+              ...currentItem,
+              value: e.target.value,
+            })
+          );
+          dispatch(
+            AdminActions.setSystemSetting(
+              updateValueByCode(code, e.target.value)
+            )
+          );
+        },
+      };
+    },
+    [systemSetting]
+  );
+
+  const renderContent = useMemo(() => {
+    return (
+      <div>
+        <div className="flex justify-between items-center my-4">
+          <div className="text-2xl font-bold mb-4">Cài đặt hệ thống</div>
+        </div>
+        <div className="mb-4">
+          <Input fullWidth label="app name" {...inputPropsHandle("appName")} />
+        </div>
+        <div className="mb-4">
+          <Input
+            fullWidth
+            label="phone number"
+            {...inputPropsHandle("phoneNumber")}
+          />
         </div>
       </div>
-      <div className="mb-4">
-        <Input
-          fullWidth
-          label="app name"
-          value={appName}
-          onChange={(e) => setAppName(e.target.value)}
-        />
-      </div>
-      <div className="mb-4">
-        <Input
-          fullWidth
-          label="phone number"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-        />
-      </div>
-    </div>
-  );
+    );
+  }, [systemSetting]);
+
+  return renderContent;
 }
 
 export default AdminSettingSystem;
