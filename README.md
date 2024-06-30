@@ -1,6 +1,6 @@
 # Init DB
 
-appName || api/setting/create
+setting-system || api/setting/create
 {
 "key":"setting-system",
 "code":"appName",
@@ -17,4 +17,11 @@ appName || api/setting/create
 "key":"setting-system",
 "code":"phoneNumber",
 "value":"0980"
+}
+
+appName || api/setting/create
+{
+"key":"setting-product",
+"code":"policy",
+"value":"[]"
 }

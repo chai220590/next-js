@@ -1,8 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 body {
-  overflow-y: scroll; /* Always show vertical scrollbar */
+  overflow-y: scroll;
 }
 
 /* Custom styles */
@@ -10,7 +11,7 @@ body {
   transition: opacity 1s ease-in-out;
 }
 
-/* Custom scrollbar styles */
+/* Custom scrollbar styles  */
 ::-webkit-scrollbar {
   width: 12px;
 }
@@ -27,6 +28,7 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #000fff50;
 }
+
 @keyframes fadeInUp {
   to {
     opacity: 1;

@@ -41,6 +41,7 @@ function ConfirmLogoutModal() {
 
   return (
     <Modal
+      backdrop="blur"
       isOpen={isOpen}
       onOpenChange={onOpenChange}
       onClose={customerOnClose}

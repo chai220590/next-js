@@ -1,0 +1,39 @@
+@BaseURL=http://167.86.80.140:4062/api/
+@accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Njc1M2QzNTE5MDczZTYxOWExNzQwZTEiLCJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNzE5NzM1NDAyLCJleHAiOjE3MTk4MjE4MDJ9.dde8sHIiuufEuzvyxFgcIQZq3nmZI8k_bc7w-wVqZ7I
+
+###Đăng nhập=========================================
+POST {{BaseURL}}login
+Content-Type: application/json
+
+{
+    "username":"admin",
+    "password":"123456"
+}
+
+###Tạo cài đặt=========================================
+POST {{BaseURL}}setting/create
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+"key":"setting-product",
+"code":"policy",
+"value":"[]"
+}
+
+### Lấy ds cài đặt=========================================
+POST {{BaseURL}}setting/get
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+
+### xóa cài đặt=========================================
+POST {{BaseURL}}setting/update
+Content-Type: application/json
+
+      {
+      "_id": "6681181219073e619a17413f",
+      "key": "setting-product",
+      "code": "policy",
+      "value": "[\"policy 01\",\"policy 02\",\"policy 03\"]"
+    }

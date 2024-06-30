@@ -5,7 +5,6 @@ import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import OneMenuItemComponent from "./OneMenuItemComponent";
 function AdminMenuComponent() {
-  const dispatch = useDispatch();
   const router = useRouter();
   const setSearchParams = useSetSearchParams(window);
   const pathname = usePathname();
@@ -80,6 +79,13 @@ function AdminMenuComponent() {
                 path: "/admin/settings/system",
                 onClick: () => {
                   router.push("/admin/settings/system");
+                },
+              },
+              {
+                label: "Sản phẩm",
+                path: "/admin/settings/product",
+                onClick: () => {
+                  router.push("/admin/settings/product");
                 },
               },
             ]

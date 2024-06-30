@@ -4,6 +4,7 @@ import { Input } from "@nextui-org/input";
 import _ from "lodash";
 import { useCallback, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 function AdminSettingSystem() {
   const dispatch = useDispatch();
   const systemSetting = useSelector(AdminSelectors.systemSetting);

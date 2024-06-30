@@ -11,7 +11,7 @@ import { Providers } from "./providers";
 import { Navbar } from "@/components/navbar";
 import { fontSans } from "@/config/fonts";
 import { siteConfig } from "@/config/site";
-import ProcessBar from "@/components/ProcessBar/ProcessBar";
+import ProcessBar from "@/components/process-bar/ProcessBar";
 import MainComponent from "./components/MainComponent";
 
 export const metadata: Metadata = {

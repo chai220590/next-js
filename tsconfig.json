@@ -32,7 +32,8 @@
     "app/components/WithIntersectionObserver.js",
     "app/components/banner/SharpComponent.jsx",
     "app/admin/components/AdminAuth.tsx",
-    "services/fetch.ts"
+    "services/fetch.ts",
+    "components/product-detail/product-detail-information/ProductDetail.Price.jsx"
   ],
   "exclude": ["node_modules"]
 }
