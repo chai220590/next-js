@@ -1,13 +1,11 @@
 "use client";
-import { StarIcon as StarOutlineIcon } from "@heroicons/react/24/outline";
-import { MinusIcon, StarIcon } from "@heroicons/react/24/solid";
+import { MinusIcon } from "@heroicons/react/24/solid";
 import { Button } from "@nextui-org/react";
 import { useState } from "react";
-import ProductDetailProductQuantity from "./ProductDetail.ProductQuantity";
-import ProductDetailPrice from "./ProductDetail.Price";
-import ProductDetailRateStar from "./ProductDetail.RateStar";
 import ProductDetailPolicy from "./ProductDetail.Policy";
-
+import ProductDetailPrice from "./ProductDetail.Price";
+import ProductDetailProductQuantity from "./ProductDetail.ProductQuantity";
+import ProductDetailRateStar from "./ProductDetail.RateStar";
 function ProductDetailInformation() {
   // xử lý số lượng
   const [quantity, setQuantity] = useState(1);

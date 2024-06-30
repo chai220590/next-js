@@ -9,7 +9,7 @@ function* AppSaga() {
 function* getSystemSetting() {
   try {
     yield put(AppActions.setIsLoading(true));
-    const rs = yield AppRequest.getSystemSetting({ key: "setting-system" });
+    const rs = yield AppRequest.getSystemSetting();
     yield put(AppActions.setIsLoading(false));
     if (rs.success) {
       const temp = _.reduce(

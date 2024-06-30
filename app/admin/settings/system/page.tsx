@@ -39,8 +39,10 @@ function AdminSettingSystem() {
           const currentItem = _.find(systemSetting, { code });
           dispatch(
             AdminActions.saveSystemSetting({
-              ...currentItem,
-              value: e.target.value,
+              body: {
+                ...currentItem,
+                value: e.target.value,
+              },
             })
           );
           dispatch(

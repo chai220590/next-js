@@ -10,9 +10,11 @@ function* AdminSaga() {
 
 function* saveSystemSetting({ payload }) {
   try {
-    yield delay(500);
-    yield AdminRequest.saveSystemSetting(payload);
+    const { body, onSuccess } = payload;
+    yield delay(1000);
+    yield AdminRequest.saveSystemSetting(body);
     yield put(AppActions.getSystemSetting());
+    onSuccess && onSuccess();
   } catch (error) {
     console.log(error);
   }
