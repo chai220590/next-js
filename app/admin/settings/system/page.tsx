@@ -14,7 +14,7 @@ function AdminSettingSystem() {
   }, []);
 
   const getSettingSystem = () => {
-    dispatch(AdminActions.getSystemSetting({ key: "setting-system" }));
+    dispatch(AdminActions.getSystemSetting({ key: "system" }));
   };
 
   const updateValueByCode = useCallback(

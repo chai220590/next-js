@@ -12,8 +12,9 @@ function* checkLogin({ payload }) {
     yield put(AppActions.setIsLoading(true));
     const rs = yield LoginRequest.checklogin(payload);
     yield put(AppActions.setIsLoading(false));
-    if (!!rs) {
-      yield put(LoginActions.setAccessToken(rs));
+
+    if (rs.success) {
+      yield put(LoginActions.setAccessToken(rs.accessToken));
     }
   } catch (error) {
     yield put(AppActions.setIsLoading(false));

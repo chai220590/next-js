@@ -1,7 +1,7 @@
 import SysFetch from "../../../services/fetch";
 
 const REQUEST = {
-  LOGIN: "login",
+  LOGIN: "users/login",
 };
 
 const LoginRequest = {

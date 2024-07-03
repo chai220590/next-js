@@ -25,11 +25,23 @@ registerInterceptorsRequest(AxiosClient);
 const registerInterceptorResponse = (clientInstance: AxiosInstance) => {
   clientInstance.interceptors.response.use(
     async (response: { data: any }) => {
-      return response.data || response;
+      const data = response.data || response;
+      if (data.success) {
+        return response.data || response;
+      } else {
+        const data = response?.data;
+
+        if (data?.message && data?.noti) {
+          toast.error(data?.message);
+        }
+        return response.data || response;
+      }
     },
     async (error: any) => {
-      if (error?.response?.data) {
-        toast.error(error?.response?.data);
+      const data = error?.response?.data;
+
+      if (data?.message && data?.noti) {
+        toast.error(data?.message);
       }
       return Promise.reject(error);
     }

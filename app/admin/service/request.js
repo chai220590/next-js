@@ -1,13 +1,13 @@
 import SysFetch from "../../../services/fetch";
-
+import qs from "querystring";
 const REQUEST = {
-  SETTING: "setting/get",
+  SETTING: "settings",
   UPDATE: "setting/update",
 };
 
 const AdminRequest = {
   getSystemSetting: (body) => {
-    return SysFetch.post(REQUEST.SETTING, body);
+    return SysFetch.get(`${REQUEST.SETTING}?${qs.stringify(body)}`);
   },
   saveSystemSetting: (body) => {
     return SysFetch.post(REQUEST.UPDATE, body);

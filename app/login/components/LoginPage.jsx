@@ -36,8 +36,6 @@ function LoginPage() {
   } = useForm();
   const onSubmit = async (data) => {
     dispatch(LoginActions.checkLogin(data));
-    // localStorage.setItem("ACCESS_TOKEN", "1");
-    // router.replace("/admin");
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex justify-center">
