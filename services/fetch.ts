@@ -29,10 +29,8 @@ const registerInterceptorResponse = (clientInstance: AxiosInstance) => {
       if (data.success) {
         return response.data || response;
       } else {
-        const data = response?.data;
-
         if (data?.message && data?.noti) {
-          toast.error(data?.message);
+          toast.error(data?.message.toString() || "Truy cập thất bại");
         }
         return response.data || response;
       }

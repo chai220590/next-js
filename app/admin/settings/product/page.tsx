@@ -1,66 +1,47 @@
 "use client";
-import { AdminActions, AdminSelectors } from "@/app/admin/service/slice";
-import _ from "lodash";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { AdminActions } from "@/app/admin/service/slice";
+import { AppSelectors } from "@/services/app/app.slice";
+import { CloudArrowUpIcon } from "@heroicons/react/24/solid";
+import { Button } from "@nextui-org/button";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Policy from "../components/Policy";
 
 function AdminSettingProduct() {
   const dispatch = useDispatch();
-  const systemSetting = useSelector(AdminSelectors.systemSetting);
-  const [policyList, setPolicyList] = useState([]);
-
-  // init data
-  useEffect(() => {
-    if (systemSetting) {
-      // set policy
-      initPolicy();
-    }
-  }, [systemSetting]);
-
-  const initPolicy = () => {
-    const obj = _.find(systemSetting, { code: "policy" });
-    if (obj?.value) {
-      setPolicyList(JSON.parse(obj?.value));
-    }
-  };
+  const isLoading = useSelector(AppSelectors.isLoading);
 
   useEffect(() => {
     getSettingSystem();
   }, []);
 
   const getSettingSystem = () => {
-    dispatch(AdminActions.getSystemSetting({ key: "setting-product" }));
+    dispatch(AdminActions.getSystemSetting({ key: "product" }));
   };
-
-  const updateValueByCode = useCallback(
-    (code: any, value: any) => {
-      const newData = _.cloneDeep(systemSetting);
-
-      const obj = _.find(newData, { code });
-      if (obj) {
-        obj.value = value;
-      }
-
-      return newData;
-    },
-    [systemSetting]
-  );
-
-  const renderContent = useMemo(() => {
-    return (
-      <div>
-        <div className="flex justify-between items-center my-4">
-          <div className="text-2xl font-bold">Cài đặt sản phẩm</div>
-        </div>
-        <div className="mb-4">
-          <Policy list={policyList} setPolicyList={setPolicyList} />
+  const onSave = () => {
+    dispatch(AdminActions.saveSystemSetting());
+  };
+  return (
+    <div>
+      <div className="flex justify-between items-center my-4">
+        <div className="text-2xl font-bold">Cài đặt sản phẩm</div>
+        <div>
+          <Button
+            onClick={onSave}
+            isLoading={isLoading}
+            type="submit"
+            color="primary"
+            isIconOnly
+          >
+            <CloudArrowUpIcon className="size-4 text-white" />
+          </Button>
         </div>
       </div>
-    );
-  }, [systemSetting, policyList]);
-
-  return renderContent;
+      <div className="mb-4">
+        <Policy />
+      </div>
+    </div>
+  );
 }
 
 export default AdminSettingProduct;

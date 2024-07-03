@@ -2,7 +2,7 @@ import SysFetch from "../../../services/fetch";
 import qs from "querystring";
 const REQUEST = {
   SETTING: "settings",
-  UPDATE: "setting/update",
+  UPDATE: "settings",
 };
 
 const AdminRequest = {
@@ -10,7 +10,7 @@ const AdminRequest = {
     return SysFetch.get(`${REQUEST.SETTING}?${qs.stringify(body)}`);
   },
   saveSystemSetting: (body) => {
-    return SysFetch.post(REQUEST.UPDATE, body);
+    return SysFetch.put(REQUEST.UPDATE, body);
   },
 };
 export default AdminRequest;

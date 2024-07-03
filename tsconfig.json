@@ -33,7 +33,8 @@
     "app/components/banner/SharpComponent.jsx",
     "app/admin/components/AdminAuth.tsx",
     "services/fetch.ts",
-    "components/product-detail/product-detail-information/ProductDetail.Price.jsx"
+    "components/product-detail/product-detail-information/ProductDetail.Price.jsx",
+    "components/dnd/DndList.jsx"
   ],
   "exclude": ["node_modules"]
 }
