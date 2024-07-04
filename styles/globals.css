@@ -5,6 +5,33 @@
 body {
   overflow-y: scroll;
 }
+.custom-editor .ck-editor__editable_inline {
+  min-height: 300px;
+  font-size: 16px;
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+/* Button styles */
+.custom-editor .ck.ck-button {
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+}
+
+.custom-editor .ck.ck-button:hover {
+  background-color: #005bb5;
+}
+
+/* Toolbar styles */
+.custom-editor .ck.ck-toolbar {
+  background-color: #ffffff;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  border-radius: 8px 8px 0 0;
+}
 
 /* Custom styles */
 .transition-opacity {
@@ -30,9 +57,13 @@ body {
 }
 
 @keyframes fadeInUp {
+  from {
+    transform: translateY(10%);
+    opacity: 0.3;
+  }
   to {
-    opacity: 1;
     transform: translateY(0);
+    opacity: 1;
   }
 }
 

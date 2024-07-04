@@ -1,33 +1,31 @@
+import DndList from "@/components/dnd/DndList";
 import {
   ArrowsUpDownIcon,
   PlusIcon,
-  ShieldCheckIcon,
   ShieldExclamationIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
 import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
+import { Textarea } from "@nextui-org/input";
 import _ from "lodash";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AdminActions, AdminSelectors } from "../../service/slice";
-import DndList from "@/components/dnd/DndList";
-function Policy() {
+function ProductSettingCustom({ settingName = "", label = "" }) {
   const dispatch = useDispatch();
   const systemSetting = useSelector(AdminSelectors.systemSetting);
 
-  const policy = JSON.parse(
+  const settingCustomData = JSON.parse(
     _.find(systemSetting, {
-      code: "policy",
+      code: settingName,
     })?.value || "[]"
   );
-  console.log(systemSetting);
 
-  const setPolicy = (data) => {
+  const setSettingCustomData = (data) => {
     dispatch(
       AdminActions.setSystemSetting(
         systemSetting.map((x) => {
-          if (x.code === "policy") {
+          if (x.code === settingName) {
             return {
               ...x,
               value: JSON.stringify(data),
@@ -41,36 +39,38 @@ function Policy() {
   };
 
   const onAddNew = useCallback(() => {
-    policy.push("");
-    setPolicy([...policy]);
-  }, [policy]);
+    settingCustomData.push("");
+    setSettingCustomData([...settingCustomData]);
+  }, [settingCustomData]);
 
   const onDelete = useCallback(
     (removeIndex) => {
-      const filteredItems = policy
+      const filteredItems = settingCustomData
         .slice(0, removeIndex)
-        .concat(policy.slice(removeIndex + 1, policy.length));
-      setPolicy(filteredItems);
+        .concat(
+          settingCustomData.slice(removeIndex + 1, settingCustomData.length)
+        );
+      setSettingCustomData(filteredItems);
     },
-    [policy]
+    [settingCustomData]
   );
 
   const onChangePolicy = useCallback(
     ({ index, value }) => {
-      setPolicy(
-        policy.map((x, i) => {
+      setSettingCustomData(
+        settingCustomData.map((x, i) => {
           return i === index ? value : x;
         })
       );
     },
-    [policy]
+    [settingCustomData]
   );
 
   return (
-    <div className="mt-8">
-      <div className="flex justify-between items-center">
-        <div>
-          <span className="font-medium">Chính sách</span>
+    <div>
+      <div className="flex items-center">
+        <div className="mr-4">
+          <span className="font-medium">{label}</span>
         </div>
         <Button size="sm" color="success" isIconOnly onClick={onAddNew}>
           <PlusIcon className="size-6 text-white" />
@@ -79,20 +79,21 @@ function Policy() {
       <div className="p-4 rounded-md">
         <DndList
           setList={(list) => {
-            setPolicy(
+            setSettingCustomData(
               list.map((x) => {
                 return x.value;
               })
             );
           }}
-          list={policy.map((oneItem, index) => {
+          list={settingCustomData.map((oneItem, index) => {
             return {
               id: `${index}`,
               value: oneItem,
               content: (
                 <div className="flex items-center py-2 gap-2" key={`${index}`}>
                   <ShieldExclamationIcon className="size-4 text-success" />
-                  <Input
+                  <Textarea
+                    minRows={1}
                     value={oneItem}
                     onChange={(e) =>
                       onChangePolicy({
@@ -124,4 +125,4 @@ function Policy() {
   );
 }
 
-export default Policy;
+export default ProductSettingCustom;

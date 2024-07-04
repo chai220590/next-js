@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import AdminAuth from "./components/AdminAuth";
 import ConfirmLogoutModal from "./components/ConfirmLogoutModal";
@@ -6,13 +7,17 @@ import AdminMenuComponent from "./components/admin-menu/AdminMenuComponent";
 function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <AdminAuth>
-      <div className="grid grid-cols-4 bg-white">
-        <div className="col-span-1 relative bg-white">
-          <div className="fixed top-[64px] overflow-hidden">
+      <div className="flex bg-white">
+        <div className="w-[300px] relative bg-white">
+          <div className="fixed top-[66px] overflow-hidden">
             <AdminMenuComponent />
           </div>
         </div>
-        <div className="col-span-3 bg-white">{children}</div>
+        <div
+          className={`flex-1 bg-white transition-transform transform fade-in-up`}
+        >
+          {children}
+        </div>
       </div>
       <ConfirmLogoutModal />
     </AdminAuth>

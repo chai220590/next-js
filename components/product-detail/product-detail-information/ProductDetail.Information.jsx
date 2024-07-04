@@ -1,11 +1,10 @@
 "use client";
-import { MinusIcon } from "@heroicons/react/24/solid";
 import { Button } from "@nextui-org/react";
 import { useState } from "react";
-import ProductDetailPolicy from "./ProductDetail.Policy";
 import ProductDetailPrice from "./ProductDetail.Price";
 import ProductDetailProductQuantity from "./ProductDetail.ProductQuantity";
 import ProductDetailRateStar from "./ProductDetail.RateStar";
+import ProductDetailSetting from "./ProductDetail.Setting";
 function ProductDetailInformation() {
   // xử lý số lượng
   const [quantity, setQuantity] = useState(1);
@@ -33,20 +32,16 @@ function ProductDetailInformation() {
         <ProductDetailPrice price={200000} sellPrice={100000} />
       </div>
       <div className="mb-4">
-        <ProductDetailPolicy />
+        <ProductDetailSetting
+          label={"Chính sách mua hàng"}
+          settingName="policy"
+        />
       </div>
       <div className="mb-4">
-        <span className="font-bold">Phương thức vận chuyển:</span>
-        {[1, 2].map((x, index) => {
-          return (
-            <div className="flex items-center" key={`${index}`}>
-              <MinusIcon className="size-2 mr-2" />
-              <span className="text-sm">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              </span>
-            </div>
-          );
-        })}
+        <ProductDetailSetting
+          label={"Chính sách vận chuyển"}
+          settingName="delivery"
+        />
       </div>
       <div className="mt-4 flex items-center gap-2">
         <ProductDetailProductQuantity

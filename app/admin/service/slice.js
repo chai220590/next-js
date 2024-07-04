@@ -13,6 +13,7 @@ const AdminSlice = createSlice({
       state.systemSetting = payload || [];
     },
     saveSystemSetting: () => {},
+    createPost: (state, { payload }) => {},
   },
 });
 

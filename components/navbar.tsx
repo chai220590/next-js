@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
-import { Kbd } from "@nextui-org/kbd";
 import { Link } from "@nextui-org/link";
 import {
   NavbarBrand,
@@ -24,8 +23,8 @@ import {
 } from "@/components/icons";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { siteConfig } from "@/config/site";
-import { useAppSelector } from "@/services/hooks/hook";
 import { AppSelectors } from "@/services/app/app.slice";
+import { useAppSelector } from "@/services/hooks/hook";
 
 export const Navbar = () => {
   const systemSetting = useAppSelector(AppSelectors.systemSetting);

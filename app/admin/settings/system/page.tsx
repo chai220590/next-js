@@ -1,5 +1,6 @@
 "use client";
 import { AdminActions, AdminSelectors } from "@/app/admin/service/slice";
+import ContainerHeader from "@/components/container-header/ContainerHeader";
 import { AppSelectors } from "@/services/app/app.slice";
 import { CloudArrowUpIcon } from "@heroicons/react/24/solid";
 import { Button } from "@nextui-org/button";
@@ -22,6 +23,7 @@ function AdminSettingSystem() {
   const [initialValues, setInitialValues] = useState<FormValues>({
     appName: "",
     phoneNumber: "",
+    address: "",
   });
   const { control, handleSubmit, setValue, watch } = useForm();
 
@@ -60,20 +62,22 @@ function AdminSettingSystem() {
   const isFormChanged = !_.isEqual(initialValues, currentValues);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex items-center justify-between my-4">
-        <div className="text-2xl font-bold mb-4">Cài đặt hệ thống</div>
-        <div>
-          <Button
-            isLoading={isLoading}
-            type="submit"
-            color="primary"
-            isIconOnly
-            isDisabled={!isFormChanged}
-          >
-            <CloudArrowUpIcon className="size-4 text-white" />
-          </Button>
-        </div>
-      </div>
+      <ContainerHeader
+        title={"Cài đặt hệ thống"}
+        right={
+          <div>
+            <Button
+              isLoading={isLoading}
+              type="submit"
+              color="primary"
+              isIconOnly
+              isDisabled={!isFormChanged}
+            >
+              <CloudArrowUpIcon className="size-4 text-white" />
+            </Button>
+          </div>
+        }
+      />
       <div className="mb-4">
         <Controller
           name="appName"
@@ -82,7 +86,7 @@ function AdminSettingSystem() {
             <Input
               {...field}
               fullWidth
-              label="app name"
+              label="Dự án"
               value={field.value || ""}
               onChange={(e) => field.onChange(e.target.value)}
             />
@@ -97,7 +101,22 @@ function AdminSettingSystem() {
             <Input
               {...field}
               fullWidth
-              label="app name"
+              label="Điện thoại"
+              value={field.value || ""}
+              onChange={(e) => field.onChange(e.target.value)}
+            />
+          )}
+        />
+      </div>
+      <div className="mb-4">
+        <Controller
+          name="address"
+          control={control}
+          render={({ field }) => (
+            <Input
+              {...field}
+              fullWidth
+              label="Địa chỉ"
               value={field.value || ""}
               onChange={(e) => field.onChange(e.target.value)}
             />

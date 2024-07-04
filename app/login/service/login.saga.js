@@ -22,7 +22,10 @@ function* initAccessToken() {
 function* checkLogin({ payload }) {
   try {
     yield put(AppActions.setIsLoading(true));
-    const rs = yield LoginRequest.checklogin(payload);
+
+    const rs = yield LoginRequest.checklogin({
+      ...payload,
+    });
     yield put(AppActions.setIsLoading(false));
 
     if (rs.success) {

@@ -1,10 +1,9 @@
-import { put, takeLatest, select, delay } from "redux-saga/effects";
-import { AdminActions, AdminSelectors } from "./slice";
-import AdminRequest from "./request";
+"use client";
 import { AppActions } from "@/services/app/app.slice";
-import _ from "lodash";
 import { toast } from "react-toastify";
-
+import { put, select, takeLatest } from "redux-saga/effects";
+import AdminRequest from "./request";
+import { AdminActions, AdminSelectors } from "./slice";
 function* AdminSaga() {
   yield takeLatest(AdminActions.getSystemSetting, getSystemSetting);
   yield takeLatest(AdminActions.saveSystemSetting, saveSystemSetting);
@@ -15,7 +14,6 @@ export default AdminSaga;
 function* saveSystemSetting() {
   try {
     yield put(AppActions.setIsLoading(true));
-    yield delay(100);
     const systemSetting = yield select(AdminSelectors.systemSetting);
 
     const response = yield AdminRequest.saveSystemSetting(
@@ -30,6 +28,7 @@ function* saveSystemSetting() {
     if (response.success) {
       toast.success(response.message);
       yield put(AppActions.setIsLoading(false));
+      yield put(AppActions.getSystemSetting());
     }
   } catch (error) {
     yield put(AppActions.setIsLoading(false));

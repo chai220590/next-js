@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import CONST from "./const";
 import { toast } from "react-toastify";
+import CONST from "./const";
 const timeout = CONST.REQUEST.TIME_OUT;
 let AxiosClient = axios.create({
   baseURL: CONST.URL.API,

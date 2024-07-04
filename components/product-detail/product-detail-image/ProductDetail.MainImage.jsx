@@ -79,8 +79,9 @@ function ProductDetailMainImage({ image, setIsStop }) {
             return (
               <>
                 <ModalHeader />
-                <ModalBody>
-                  <Image width={"100%"} src={image.image} />
+                <ModalBody className=" flex items-center justify-center">
+                  <div className="w-[80%] h-[80%] flex items-center justify-center">
+                  <Image width={"100%"} height={"100%"} src={image.image} /></div>
                 </ModalBody>
                 <ModalFooter />
               </>

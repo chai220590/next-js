@@ -12,11 +12,13 @@ function OneMenuItemComponent({ item }: any) {
     <ul>
       <li>
         <button
-          className="w-full flex justify-between items-center p-4 hover:bg-[#E5E5E620] hover:scale-105 transition-transform transform"
+          className="w-full flex justify-between items-center p-4 hover:scale-105 transition-transform transform"
           onClick={item?.onClick}
         >
           <span
-            className={`font-medium ${pathname === item?.path ? "text-blue-500" : "text-black-100"}`}
+            className={`font-medium ${
+              pathname === item?.path ? "text-blue-500" : "text-black-100"
+            }`}
           >
             {item?.label}
           </span>
@@ -40,14 +42,18 @@ function OneMenuItemComponent({ item }: any) {
           return (
             <button
               key={`${index}`}
-              className="ml-2 w-full flex items-center p-2 hover:bg-[#E5E5E620] hover:scale-105 transition-transform transform"
+              className="ml-2 w-full flex items-center p-2 hover:scale-105 transition-transform transform"
               onClick={x?.onClick}
             >
               <div className="mr-2">
                 <MinusIcon className="size-4" />
               </div>
               <span
-                className={`${pathname === x?.path ? "text-blue-500 font-medium" : "text-black-100"}`}
+                className={`${
+                  pathname === x?.path
+                    ? "text-blue-500 font-medium"
+                    : "text-black-100"
+                }`}
               >
                 {x?.label}
               </span>

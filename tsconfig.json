@@ -35,6 +35,6 @@
     "services/fetch.ts",
     "components/product-detail/product-detail-information/ProductDetail.Price.jsx",
     "components/dnd/DndList.jsx"
-  ],
+, "utils/navigate.ts", "app/admin/service/slice.js", "app/admin/post/service/slice.js", "app/admin/post/service/slice.js", "app/admin/post/service/saga.js", "app/admin/post/service/request.js", "app/admin/service/request.js"  ],
   "exclude": ["node_modules"]
 }
