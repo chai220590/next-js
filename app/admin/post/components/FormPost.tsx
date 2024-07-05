@@ -3,7 +3,7 @@ import ContainerHeader from "@/components/container-header/ContainerHeader";
 import { AppSelectors } from "@/services/app/app.slice";
 import { CloudArrowUpIcon } from "@heroicons/react/24/solid";
 import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
+import { Input, Textarea } from "@nextui-org/input";
 import dynamic from "next/dynamic";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -22,6 +22,7 @@ const CKEditor = dynamic(
 interface FormData {
   title: string;
   content: string;
+  shortContent: string;
 }
 
 const FormPost = () => {
@@ -43,6 +44,7 @@ const FormPost = () => {
     if (postDetail) {
       setValue("title", postDetail.title);
       setValue("content", postDetail.content);
+      setValue("shortContent", postDetail.shortContent);
     }
     return () => {
       dispatch(PostActions.setPostDetail(undefined));
@@ -106,11 +108,25 @@ const FormPost = () => {
         />
       </div>
       <div className="mt-4">
-        <div className="mb-2">
-          <label className="text-sm" htmlFor="content">
-            Nội dung
-          </label>
-        </div>
+        <Controller
+          rules={{ required: "Mô tả ngắn không được bỏ trống" }}
+          name="shortContent"
+          control={control}
+          render={({ field, fieldState }) => {
+            return (
+              <Textarea
+                {...field}
+                fullWidth
+                label="Mô tả ngắn"
+                isInvalid={!!fieldState?.error?.message}
+                errorMessage={fieldState.error?.message}
+                onChange={(e) => field.onChange(e.target.value)}
+              />
+            );
+          }}
+        />
+      </div>
+      <div className="mt-4">
         <CKEditor
           {...register("content")}
           value={getValues().content}

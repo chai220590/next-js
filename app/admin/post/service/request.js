@@ -1,20 +1,24 @@
 import SysFetch from "@/services/fetch";
 import qs from "querystring";
 const REQUEST = {
-  CREATE_POST: "posts",
-  GET_POST_BY_ID: "posts",
-  UPDATE: "posts",
+  POST: "posts",
 };
 
 const PostRequest = {
+  deletePost: (postId) => {
+    return SysFetch.delete(`${REQUEST.POST}/${postId}`);
+  },
   updatePost: (postId, body) => {
-    return SysFetch.patch(`${REQUEST.UPDATE}/${postId}`, body);
+    return SysFetch.patch(`${REQUEST.POST}/${postId}`, body);
   },
   createPost: (body) => {
-    return SysFetch.post(REQUEST.CREATE_POST, body);
+    return SysFetch.post(REQUEST.POST, body);
   },
   getPostById: (body) => {
-    return SysFetch.get(`${REQUEST.GET_POST_BY_ID}/${body}`);
+    return SysFetch.get(`${REQUEST.POST}/${body}`);
+  },
+  getList: (body) => {
+    return SysFetch.get(`${REQUEST.POST}?${qs.stringify(body)}`);
   },
 };
 export default PostRequest;

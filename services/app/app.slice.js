@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isLoading: false,
-  systemSetting: undefined,
+  systemSetting: {
+    appName: "",
+  },
 };
 
 const AppSlice = createSlice({

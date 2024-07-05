@@ -46,7 +46,7 @@ function OneMenuItemComponent({ item }: any) {
               onClick={x?.onClick}
             >
               <div className="mr-2">
-                <MinusIcon className="size-4" />
+                <MinusIcon className="size-2" />
               </div>
               <span
                 className={`${
