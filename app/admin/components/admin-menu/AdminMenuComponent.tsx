@@ -2,7 +2,6 @@
 import useSetSearchParams from "@/services/hooks/set-search-params";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
 import OneMenuItemComponent from "./OneMenuItemComponent";
 function AdminMenuComponent() {
   const router = useRouter();
