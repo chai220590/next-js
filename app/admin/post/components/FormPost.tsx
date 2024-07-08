@@ -1,16 +1,18 @@
 "use client";
 import ContainerHeader from "@/components/container-header/ContainerHeader";
 import { AppSelectors } from "@/services/app/app.slice";
-import { CloudArrowUpIcon, PhotoIcon } from "@heroicons/react/24/solid";
+import { CloudArrowUpIcon } from "@heroicons/react/24/solid";
 import { Button } from "@nextui-org/button";
 import { Input, Textarea } from "@nextui-org/input";
+import { Image } from "@nextui-org/react";
 import dynamic from "next/dynamic";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form"; // Import useForm and Controller from react-hook-form
 import { useDispatch, useSelector } from "react-redux";
+import slugify from "slugify"; // Import slugify
 import { PostActions, PostSelectors } from "../service/slice";
-import { Image } from "@nextui-org/react";
+import ImageUpload from "./ImageUploadComponent";
 
 // Sử dụng dynamic import để tránh lỗi SSR
 const CKEditor = dynamic(
@@ -57,6 +59,16 @@ const FormPost = () => {
       dispatch(PostActions.setPostDetail(undefined));
     };
   }, [postDetail]);
+
+  const handleTitleChange = (event: { target: { value: any } }) => {
+    const newTitle = event.target.value;
+    setValue("title", newTitle);
+    const newSlug = slugify(newTitle, {
+      lower: true,
+      remove: /[*+~.()'"!:@]/g,
+    });
+    setValue("slug", newSlug);
+  };
 
   const onSubmit = (data: FormData) => {
     if (postId) {
@@ -110,7 +122,10 @@ const FormPost = () => {
                     label="Tên bài viết"
                     isInvalid={!!fieldState?.error?.message}
                     errorMessage={fieldState.error?.message}
-                    onChange={(e) => field.onChange(e.target.value)}
+                    onChange={(e) => {
+                      field.onChange(e.target.value);
+                      handleTitleChange(e);
+                    }}
                   />
                 );
               }}
@@ -126,7 +141,7 @@ const FormPost = () => {
                   <Input
                     {...field}
                     fullWidth
-                    label="Slug bài viết"
+                    label="Slug"
                     isInvalid={!!fieldState?.error?.message}
                     errorMessage={fieldState.error?.message}
                     onChange={(e) => field.onChange(e.target.value)}
@@ -134,6 +149,9 @@ const FormPost = () => {
                 );
               }}
             />
+            <p className="text-small text-default-400 mt-2">
+              Slug đường dẫn thân thiện tới bài viết
+            </p>
           </div>
           <div className="mb-4">
             <Controller
@@ -166,11 +184,11 @@ const FormPost = () => {
         </div>
         <div className=" col-span-1">
           <div className="mb-4">
-            <Image
-              src={
-                "https://jkfenner.com/wp-content/uploads/2019/11/default.jpg"
-              }
-              alt={""}
+            <ImageUpload
+              image={getValues().image}
+              setImage={(url: string) => {
+                setValue("image", url);
+              }}
             />
             <p className="text-small text-default-400 mt-2">
               Hình ảnh của bài viết
