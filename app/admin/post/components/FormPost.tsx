@@ -135,6 +135,7 @@ const FormPost = () => {
                     onChange={(e) => {
                       field.onChange(e.target.value);
                       handleTitleChange(e);
+                      setValue("altImage", e.target.value);
                     }}
                   />
                 );
@@ -194,13 +195,29 @@ const FormPost = () => {
         </div>
         <div className=" col-span-1">
           <div className="mb-4">
+            <p className="text-small mb-2">Hình ảnh</p>
             {renderUploadImage}
-            <p className="text-small text-default-400 mt-2">
-              Hình ảnh của bài viết
+            <p className="text-[10px] text-red-400 mt-2">
+              Nên dùng hình vuông để đảm bảo chất lượng tốt nhất
             </p>
           </div>
           <div className="mb-4">
-            <Input label="Alt ảnh" />
+            <Controller
+              name="altImage"
+              control={control}
+              render={({ field, fieldState }) => {
+                return (
+                  <Input
+                    {...field}
+                    fullWidth
+                    label="Alt ảnh"
+                    isInvalid={!!fieldState?.error?.message}
+                    errorMessage={fieldState.error?.message}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  />
+                );
+              }}
+            />
             <p className="text-small text-default-400 mt-2">
               Alt ảnh sẻ giúp hình ảnh dễ dàng được tìm thấy bởi google
             </p>

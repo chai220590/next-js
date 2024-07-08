@@ -25,9 +25,7 @@ const ImageUpload = ({ setImage, image }: any) => {
       });
       if (response.url) {
         setImage(response.url);
-        setTimeout(() => {
-          setUploading(false);
-        }, 1000);
+        setUploading(false);
       }
     } catch (error) {
       console.error("Upload error:", error);
@@ -49,6 +47,9 @@ const ImageUpload = ({ setImage, image }: any) => {
         <input {...getInputProps()} />
         {!!image && !uploading ? (
           <Image
+            onError={() => {
+              setImage("/images/image-icon.png");
+            }}
             isLoading={uploading}
             src={image}
             alt={"UploadImage"}
@@ -57,7 +58,7 @@ const ImageUpload = ({ setImage, image }: any) => {
         ) : (
           <Image
             isLoading={uploading}
-            src={"https://jkfenner.com/wp-content/uploads/2019/11/default.jpg"}
+            src={"/images/image-icon.png"}
             alt={"UploadImage"}
           />
         )}
