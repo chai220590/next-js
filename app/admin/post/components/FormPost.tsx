@@ -4,10 +4,9 @@ import { AppSelectors } from "@/services/app/app.slice";
 import { CloudArrowUpIcon } from "@heroicons/react/24/solid";
 import { Button } from "@nextui-org/button";
 import { Input, Textarea } from "@nextui-org/input";
-import { Image } from "@nextui-org/react";
 import dynamic from "next/dynamic";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form"; // Import useForm and Controller from react-hook-form
 import { useDispatch, useSelector } from "react-redux";
 import slugify from "slugify"; // Import slugify
@@ -37,9 +36,9 @@ const FormPost = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const isLoading = useSelector(AppSelectors.isLoading);
-  const { control, handleSubmit, setValue, register, getValues } =
+  const { control, handleSubmit, setValue, register, getValues, watch } =
     useForm<FormData>();
-
+  const watchImage = watch(["image"]);
   useEffect(() => {
     if (postId) {
       dispatch(PostActions.getPostById(postId));
@@ -89,6 +88,17 @@ const FormPost = () => {
       );
     }
   };
+
+  const renderUploadImage = useMemo(() => {
+    return (
+      <ImageUpload
+        image={getValues().image}
+        setImage={(url: string) => {
+          setValue("image", url);
+        }}
+      />
+    );
+  }, [watchImage]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -184,12 +194,7 @@ const FormPost = () => {
         </div>
         <div className=" col-span-1">
           <div className="mb-4">
-            <ImageUpload
-              image={getValues().image}
-              setImage={(url: string) => {
-                setValue("image", url);
-              }}
-            />
+            {renderUploadImage}
             <p className="text-small text-default-400 mt-2">
               Hình ảnh của bài viết
             </p>

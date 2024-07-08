@@ -1,10 +1,9 @@
 import SysFetch from "@/services/fetch";
 import { Image } from "@nextui-org/react";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
-const ImageUpload = ({ setImage }: any) => {
-  const [file, setFile] = useState<any>(null);
+const ImageUpload = ({ setImage, image }: any) => {
   const [uploading, setUploading] = useState(false);
 
   const onDrop = useCallback((acceptedFiles: any) => {
@@ -24,15 +23,14 @@ const ImageUpload = ({ setImage }: any) => {
           "Content-Type": "multipart/form-data",
         },
       });
-      if (response.name) {
-        setImage(response.name);
-      }
       if (response.url) {
-        setFile(response.url);
+        setImage(response.url);
+        setTimeout(() => {
+          setUploading(false);
+        }, 1000);
       }
     } catch (error) {
       console.error("Upload error:", error);
-    } finally {
       setUploading(false);
     }
   };
@@ -45,33 +43,31 @@ const ImageUpload = ({ setImage }: any) => {
     multiple: false,
   });
 
+  const renderImage = useMemo(() => {
+    return (
+      <div {...getRootProps({ className: "dropzone" })}>
+        <input {...getInputProps()} />
+        {!!image && !uploading ? (
+          <Image
+            isLoading={uploading}
+            src={image}
+            alt={"UploadImage"}
+            className="object-cover rounded-md mx-auto"
+          />
+        ) : (
+          <Image
+            isLoading={uploading}
+            src={"https://jkfenner.com/wp-content/uploads/2019/11/default.jpg"}
+            alt={"UploadImage"}
+          />
+        )}
+      </div>
+    );
+  }, [image, uploading]);
+
   return (
     <div className="max-w-md mx-auto bg-gray-100 rounded-lg shadow-md">
-      {uploading ? (
-        <div>isLoading</div>
-      ) : (
-        <div>
-          {file ? (
-            <div className="text-center">
-              <Image
-                src={file}
-                alt={"UploadImage"}
-                className="object-cover rounded-md mx-auto"
-              />
-            </div>
-          ) : (
-            <div {...getRootProps({ className: "dropzone" })}>
-              <input {...getInputProps()} />
-              <Image
-                src={
-                  "https://jkfenner.com/wp-content/uploads/2019/11/default.jpg"
-                }
-                alt={"UploadImage"}
-              />
-            </div>
-          )}
-        </div>
-      )}
+      {renderImage}
     </div>
   );
 };
