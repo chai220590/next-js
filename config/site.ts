@@ -18,7 +18,7 @@ export const siteConfig = {
     },
     {
       label: "Tin tức",
-      href: "/blog",
+      href: "/news",
     },
     {
       label: "Liên hệ",
@@ -40,7 +40,7 @@ export const siteConfig = {
     },
     {
       label: "Tin tức",
-      href: "/blog",
+      href: "/news",
     },
     {
       label: "Liên hệ",

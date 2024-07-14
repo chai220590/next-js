@@ -69,7 +69,7 @@ const post = (url: string, data: any, config = {}) => {
   return AxiosClient.post(url, data, config);
 };
 
-const get = (url: string, data: AxiosRequestConfig<any> | undefined) => {
+const get = (url: string, data?: AxiosRequestConfig<any> | undefined) => {
   return AxiosClient.get(url, data);
 };
 
@@ -92,6 +92,9 @@ const postWithCustomHeader = (url: string, data: any, customHeaders: any) => {
       ...customHeaders,
     },
   };
+
+  console.log({ config });
+
   return AxiosClient.post(url, data, config);
 };
 const SysFetch = {

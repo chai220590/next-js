@@ -103,7 +103,7 @@ const FormPost = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <ContainerHeader
-        title={"Viết bài"}
+        title={postId ? "Cập nhật bài viết" : "Viết bài"}
         right={
           <div>
             <Button
@@ -197,7 +197,7 @@ const FormPost = () => {
           <div className="mb-4">
             <p className="text-small mb-2">Hình ảnh</p>
             {renderUploadImage}
-            <p className="text-[10px] text-red-400 mt-2">
+            <p className="text-[12px] text-red-400 mt-2">
               Nên dùng hình vuông để đảm bảo chất lượng tốt nhất
             </p>
           </div>

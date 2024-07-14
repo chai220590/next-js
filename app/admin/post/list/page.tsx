@@ -25,9 +25,9 @@ import moment from "moment";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import SysTable from "../../../../components/Table";
 import { PostActions, PostSelectors } from "../service/slice";
 import ConfirmDeletePost from "./components/ConfirmDeletePost";
-import SysTable from "./Table";
 function PostList() {
   const setSearchParams = useSetSearchParams(window);
   const router = useRouter();
@@ -45,6 +45,11 @@ function PostList() {
       name: "#",
       key: "#",
       className: "w-[40px]",
+    },
+    {
+      name: "Hình ảnh",
+      key: "image",
+      className: "w-[50px]",
     },
     {
       name: "Tiêu đề",
@@ -94,13 +99,15 @@ function PostList() {
               })}
             </Tooltip>
           ),
-          shortContent: (
-            <Tooltip delay={1000} content={x?.shortContent}>
-              {_.truncate(x?.shortContent, {
-                length: 100,
-              })}
-            </Tooltip>
+          image: (
+            <img
+              className="w-[50px] h-[50px] object-cover"
+              src={x?.image || "/images/image-icon.png"}
+            />
           ),
+          shortContent: _.truncate(x?.shortContent, {
+            length: 100,
+          }),
           options: (
             <Dropdown>
               <DropdownTrigger>

@@ -2,9 +2,16 @@ import { AppActions } from "@/services/app/app.slice";
 import _ from "lodash";
 import { put, takeLatest } from "redux-saga/effects";
 import AppRequest from "./app.request";
+
+let loadingInit = false;
+
 function* AppSaga() {
   yield takeLatest(AppActions.getSystemSetting, getSystemSetting);
-  yield getSystemSetting();
+
+  if (!loadingInit) {
+    loadingInit = true;
+    yield getSystemSetting();
+  }
 }
 
 function* getSystemSetting() {

@@ -8,12 +8,13 @@ function AdminMenuComponent() {
   const setSearchParams = useSetSearchParams(window);
   const pathname = usePathname();
   const [isShow, setIsShow] = useState({
-    post: true,
-    config: true,
-    dashboard: true,
-    settings: true,
-    account: true,
-    product: true,
+    post: false,
+    config: false,
+    dashboard: false,
+    settings: false,
+    account: false,
+    product: false,
+    page: false,
   });
 
   const menuItems = useCallback(() => {
@@ -120,6 +121,26 @@ function AdminMenuComponent() {
           : [],
       },
       {
+        label: "Quản lý trang",
+        onClick: () => {
+          setIsShow({
+            ...isShow,
+            page: !isShow.page,
+          });
+        },
+        children: isShow?.page
+          ? [
+              {
+                label: "Tạo trang",
+                path: "/admin/page/create",
+                onClick: () => {
+                  router.push("/admin/page/create");
+                },
+              },
+            ]
+          : [],
+      },
+      {
         label: "Cài đặt chung",
         onClick: () => {
           setIsShow({
@@ -141,6 +162,13 @@ function AdminMenuComponent() {
                 path: "/admin/settings/product",
                 onClick: () => {
                   router.push("/admin/settings/product");
+                },
+              },
+              {
+                label: "Tin tức",
+                path: "/admin/settings/news",
+                onClick: () => {
+                  router.push("/admin/settings/news");
                 },
               },
             ]
@@ -173,7 +201,7 @@ function AdminMenuComponent() {
   }, [isShow, pathname]);
 
   return (
-    <div className="overflow-hidden pr-10 w-[320px]">
+    <div className="overflow-hidden pr-10 w-[320px] h-[100vh]">
       <nav>
         {(menuItems() || []).map((item, index) => (
           <OneMenuItemComponent item={item} key={`${index}`} />
