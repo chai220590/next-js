@@ -37,6 +37,16 @@ function ViewPageModal() {
                       {oneWG.type === "image" && (
                         <img className="w-full" src={oneWG.value} />
                       )}
+                      {oneWG.type === "text" && (
+                        <p className="">{oneWG.value}</p>
+                      )}
+                      {oneWG.type === "html" && (
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: oneWG.value,
+                          }}
+                        />
+                      )}
                     </div>
                   );
                 })}

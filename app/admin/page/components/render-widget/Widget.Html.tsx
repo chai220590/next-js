@@ -1,5 +1,4 @@
 "use client";
-import { LoginSelectors } from "@/app/login/service/login.slice";
 import CONST from "@/services/const";
 import SysFetch from "@/services/fetch";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -10,33 +9,12 @@ import {
   TrashIcon,
 } from "@heroicons/react/24/solid";
 import { Button } from "@nextui-org/button";
-import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useState } from "react";
 
 type WidgetHtmlProps = { item?: any; onChange?: any; onRemove?: any };
 
 function WidgetHtml({ item, onChange, onRemove }: WidgetHtmlProps) {
-  console.log(item);
-
   const [isEdit, setIsEdit] = useState(false);
-
-  // useEffect(() => {
-  //   if (isEdit && inputRef) {
-  //     inputRef.current.focus();
-  //   }
-  // }, [isEdit]);
-
-  const onBlur = () => {
-    setIsEdit(false);
-  };
-
-  const onChangeText = (e: any) => {
-    onChange({
-      ...item,
-      value: e.target.value,
-    });
-  };
 
   const onRemoveItem = () => {
     onRemove(item);
@@ -100,7 +78,21 @@ function WidgetHtml({ item, onChange, onRemove }: WidgetHtmlProps) {
               });
             }}
             config={{
-              extraPlugins: [MyCustomUploadAdapterPlugin],
+              toolbar: [
+                "heading",
+                "|",
+                "bold",
+                "italic",
+                "link",
+                "|",
+                "bulletedList",
+                "numberedList",
+                "blockQuote",
+                "|",
+                "undo",
+                "redo",
+              ],
+              // extraPlugins: [MyCustomUploadAdapterPlugin],
             }}
           />
         </div>

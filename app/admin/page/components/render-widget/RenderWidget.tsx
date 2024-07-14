@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import WidgetImage from "./Widget.Image";
 import WidgetTitle from "./Widget.Title";
+import WidgetText from "./Widget.Text";
 
 type RenderWidgetProps = { item?: any; onChange?: any; onRemove?: any };
 
@@ -13,6 +14,8 @@ function RenderWidget(props: RenderWidgetProps) {
   switch (item.type) {
     case "title":
       return <WidgetTitle {...props} />;
+    case "text":
+      return <WidgetText {...props} />;
     case "image":
       return <WidgetImage {...props} />;
     case "html":

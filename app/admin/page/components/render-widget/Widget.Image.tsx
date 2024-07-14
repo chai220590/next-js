@@ -62,7 +62,11 @@ const WidgetImage = (props: WidgetImageProps) => {
       >
         <input {...getInputProps()} />
         {!!item.value && !uploading ? (
-          <img src={item.value} alt={"UploadImage"} className="w-full" />
+          <img
+            src={item.value}
+            alt={"UploadImage"}
+            className="w-full min-h-10"
+          />
         ) : (
           <img
             src={"/images/image-icon.png"}

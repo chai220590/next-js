@@ -3,7 +3,10 @@ import useSetSearchParams from "@/services/hooks/set-search-params";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import OneMenuItemComponent from "./OneMenuItemComponent";
+import { AdminPageActions } from "../../page/service/slice";
+import { useDispatch } from "react-redux";
 function AdminMenuComponent() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const setSearchParams = useSetSearchParams(window);
   const pathname = usePathname();
@@ -134,6 +137,7 @@ function AdminMenuComponent() {
                 label: "Tạo trang",
                 path: "/admin/page/create",
                 onClick: () => {
+                  dispatch(AdminPageActions.resetEditPage({}));
                   router.push("/admin/page/create");
                 },
               },

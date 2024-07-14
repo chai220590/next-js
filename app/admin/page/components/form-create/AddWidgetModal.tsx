@@ -1,12 +1,11 @@
 import {
   DocumentTextIcon,
+  PencilIcon,
   PencilSquareIcon,
   PhotoIcon,
 } from "@heroicons/react/24/solid";
 import {
   Button,
-  Listbox,
-  ListboxItem,
   Modal,
   ModalBody,
   ModalContent,
@@ -15,6 +14,7 @@ import {
 } from "@nextui-org/react";
 import { uniqueId } from "lodash";
 import { useDispatch } from "react-redux";
+import { v4 as uuid_v4 } from "uuid";
 import { AdminPageActions } from "../../service/slice";
 
 function AddWidgetModal() {
@@ -32,6 +32,11 @@ function AddWidgetModal() {
       icon: <PencilSquareIcon className="size-10 text-primary" />,
     },
     {
+      name: "Text",
+      type: "text",
+      icon: <PencilIcon className="size-10 text-primary" />,
+    },
+    {
       name: "Hình ảnh",
       type: "image",
       icon: <PhotoIcon className="size-10 text-primary" />,
@@ -46,21 +51,29 @@ function AddWidgetModal() {
   const onAddNew = (oneWidget: any) => {
     switch (oneWidget.type) {
       case "title":
-        const newText = {
+        const newTitle = {
           type: "title",
           value: "",
           config: {},
-          id: uniqueId(),
+          id: `${uniqueId()}${uuid_v4()}`,
+        };
+        onAdd && onAdd(newTitle);
+        break;
+      case "text":
+        const newText = {
+          type: "text",
+          value: "",
+          config: {},
+          id: `${uniqueId()}${uuid_v4()}`,
         };
         onAdd && onAdd(newText);
         break;
-
       case "image":
         const newImage = {
           type: "image",
           value: "",
           config: {},
-          id: uniqueId(),
+          id: `${uniqueId()}${uuid_v4()}`,
         };
         onAdd && onAdd(newImage);
         break;
@@ -70,7 +83,7 @@ function AddWidgetModal() {
           type: "html",
           value: "",
           config: {},
-          id: uniqueId(),
+          id: `${uniqueId()}${uuid_v4()}`,
         };
         onAdd && onAdd(newHtml);
         break;
